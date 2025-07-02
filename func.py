@@ -9,8 +9,6 @@ import pyautogui
 import datetime
 #endregion IMPORTS
 
-settings = check_settings()
-
 history = []
 
 sys_prompt = f"Ты - умный помощник, который отвечает на вопросы пользователей. Твоя задача - давать точные и полезные ответы на вопросы. Если ты не знаешь ответа, просто скажи об этом. Будь вежлив. Сообщи, если ответ может быть не точен.Обращайся к пользователю по имени {settings["user_name"]}. Тебя зовут Алман/Алмон(Alman/Almon)"
@@ -86,7 +84,8 @@ def vpn():
 
 def open_discord():
     print(f"{assist} Открываю Discord...")
-    subprocess.Popen("C:\\Users\\Strange_creator\\AppData\\Local\\Discord\\Update.exe --processStart Discord.exe")
+    user_login = os.getlogin()
+    subprocess.Popen(f"C:\\Users\\{user_login}\\AppData\\Local\\Discord\\Update.exe --processStart Discord.exe")
 
 
 def open_steam():

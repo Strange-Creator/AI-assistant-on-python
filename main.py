@@ -8,15 +8,30 @@ from save_editor import *
 from STT import speech_to_text, input_settings
 #endregion IMPORTS
 
-settings = check_settings()
-
 if settings["first_start"]:
-    print(f"Debug: {info} Первоначальный запуск программы. Настройка параметров...")
-    print(f"Debug: {info} Версия программы: {settings["version"]}")
-    print(f"Debug: {info} Используемая текстовая модель: {settings["text_model_name"]}")
-    print(f"Debug: {info} Используемая графическая модель: {settings["graphic_model_name"]}")
+    print(f"Debug: {info} Первоначальный запуск программы. Желаете первоначально настроить программу?...")
+    first_setup = input("Да/Нет (y/n)\n>>> ").lower()
+    if first_setup in("y", "да"):
+        print("Отлично!\nКак вас зовут?")
+        settings["user_name"] = input(">>> ")
+        print("Модель ИИ для текста? (Доступны GPT-4 и GPT-4o-mini)")
+        gpt_model_setup = input("Какую модель хотите?(введите 0 для модели по умолчанию)\n>>> ").lower()
+        if gpt_model_setup in("gpt-4", "gpt-4o-mini"):
+            settings["text_model_name"] = gpt_model_setup
+        elif int(gpt_model_setup) == 0:
+            print("включена модель по умолчанию")
+        print("Модель ИИ для изображений?(Доступны flux и Stable Duffusion)")
+        image_model_setup = input("Какую модель хотите?(введите 0 для модели по умолчанию)")
+        if image_model_setup in("flux", "Stable Diffusion"):
+            settings["graphic_model_name"] = image_model_setup
+        elif int(image_model_setup) == 0:
+            print("Включена модель по умолчанию")
+    else:
+        print("Первоначальная настройка отменена. Вы сможете настроить программу позже в настройках")
+
     settings["first_start"] = False
     save_settings(settings)
+
 #region MAIN_MENU
 while True:
     print("Выберите режим работы:\n1 - без веб-поиска\n2 - с веб-поиском\n3 - генерация изображений\n4 - Голосовой ввод(еще разрабатывается)\n5 - Настройки\nexit - выход из программы и режимов")
